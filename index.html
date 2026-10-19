@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MotorLab | Explorador de carros</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="/js/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#inicio"
+        ><span class="logo">M</span> MOTORLAB<span class="dot">.</span></a
+      >
+      <p class="nav-label">ESPACIO DE EXPLORACIÓN</p>
+      <nav aria-label="Principal">
+        <a class="active" href="#inicio">01 <span>Explorador</span> ↗</a>
+        <a href="#respuesta">02 <span>Respuesta JSON</span></a>
+        <a href="#aprendizaje">03 <span>Cómo funciona</span></a>
+      </nav>
+      <div class="sidebar-note">
+        <span class="live-dot"></span> API NINJAS<br /><small
+          >Datos de vehículos<br />Consulta bajo demanda</small
+        >
+      </div>
+      <footer>
+        DISEÑO DE SISTEMAS EN INTERNET<br /><strong
+          >Erick Níger Osorio Cruz</strong
+        ><br />UNI · 5T3-SIS-S · 2026
+      </footer>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <span>Laboratorio web <b>/</b> Servicios públicos</span
+        ><span class="tag">HTML + CSS + JavaScript</span>
+      </header>
+      <main id="inicio">
+        <section class="intro">
+          <div>
+            <p class="eyebrow">EXPLORA. CONSULTA. APRENDE.</p>
+            <h1>El mundo del motor,<br /><span>a una consulta.</span></h1>
+            <p>
+              Encuentra especificaciones de carros y descubre cómo<br
+                class="desktop"
+              />
+              una petición HTTP se transforma en información.
+            </p>
+          </div>
+          <div class="hero-mark" aria-hidden="true">
+            <span>ML / 01</span
+            ><svg viewBox="0 0 300 130">
+              <path
+                d="M25 87 40 63 90 55 124 29 193 29 229 59 269 70 281 91 272 103 29 103Z"
+              />
+              <path
+                d="m102 55 26-20h59l26 24h-114M157 34v24M43 73h29M238 75h29"
+              />
+              <circle cx="76" cy="101" r="20" />
+              <circle cx="234" cy="101" r="20" />
+              <circle cx="76" cy="101" r="8" />
+              <circle cx="234" cy="101" r="8" /></svg
+            ><small>ESPECIFICACIONES / DATOS ABIERTOS</small>
+          </div>
+        </section>
+        <section class="panel search-panel" aria-labelledby="search-title">
+          <div class="section-heading">
+            <h2 id="search-title">Encuentra tu próximo descubrimiento</h2>
+            <span class="badge">GET /v1/cars</span>
+          </div>
+          <form id="search-form">
+            <label
+              >Marca<input
+                id="make"
+                name="make"
+                value="toyota"
+                placeholder="Ej. toyota"
+                maxlength="80"
+            /></label>
+            <label
+              >Modelo<input
+                id="model"
+                name="model"
+                value="corolla"
+                placeholder="Ej. corolla"
+                maxlength="80"
+            /></label>
+            <label
+              >Año <small>(opcional)</small
+              ><input
+                id="year"
+                name="year"
+                type="number"
+                min="1900"
+                max="2099"
+                placeholder="Ej. 2020"
+            /></label>
+            <label
+              >Mecanismo<select id="method">
+                <option value="async">async / await</option>
+                <option value="promises">then / catch</option>
+              </select></label
+            >
+            <button id="search" type="submit">Consultar <span>↗</span></button>
+          </form>
+          <p class="hint">
+            Completa al menos una marca o un modelo. Los resultados dependen del
+            plan de API Ninjas.
+          </p>
+        </section>
+        <section class="metrics" aria-label="Métricas de la petición">
+          <div><span>ESTADO HTTP</span><strong id="http">—</strong></div>
+          <div>
+            <span>TIEMPO TOTAL</span
+            ><strong id="latency">— <small>ms</small></strong>
+          </div>
+          <div><span>RESULTADOS</span><strong id="count">0</strong></div>
+          <div>
+            <span>FORMATO</span><strong>JSON <small>/ REST</small></strong>
+          </div>
+        </section>
+        <section aria-labelledby="results-title">
+          <div class="section-heading">
+            <h2 id="results-title">Ficha de resultados</h2>
+            <span id="query-label">Sin consulta</span>
+          </div>
+          <p id="status" role="status" aria-live="polite">
+            Listo para explorar. Pulsa Consultar para obtener datos reales.
+          </p>
+          <div id="results" class="results"></div>
+        </section>
+        <section class="panel" id="respuesta">
+          <div class="section-heading">
+            <h2>Respuesta del servicio</h2>
+            <span class="badge">application/json</span>
+          </div>
+          <p class="hint">
+            Contenido recibido en la última consulta. Los campos premium se
+            muestran tal como los entrega la API.
+          </p>
+          <pre id="json">Aún no se ha realizado ninguna consulta.</pre>
+        </section>
+        <section class="panel" id="aprendizaje">
+          <p class="eyebrow">DEL CÓDIGO A LA PANTALLA</p>
+          <h2>Una petición, cuatro pasos</h2>
+          <div class="steps">
+            <div>
+              <b>01 / Capturar</b>
+              <p>
+                Leemos los filtros y construimos la URL con URLSearchParams.
+              </p>
+            </div>
+            <div>
+              <b>02 / Consultar</b>
+              <p>
+                fetch envía un GET. El servidor agrega X-Api-Key sin exponer la
+                clave.
+              </p>
+            </div>
+            <div>
+              <b>03 / Interpretar</b>
+              <p>
+                Validamos response.ok y convertimos la respuesta con json().
+              </p>
+            </div>
+            <div>
+              <b>04 / Mostrar</b>
+              <p>
+                Actualizamos el DOM con fichas, métricas y mensajes de estado.
+              </p>
+            </div>
+          </div>
+          <details>
+            <summary>Ver el mecanismo seleccionado</summary>
+            <pre id="code"></pre>
+          </details>
+        </section>
+        <footer class="page-footer">
+          MotorLab · Práctica de consumo de servicios web
+          <a
+            href="https://api-ninjas.com/api/cars"
+            target="_blank"
+            rel="noreferrer"
+            >Documentación de Cars API ↗</a
+          >
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
